@@ -1,5 +1,5 @@
 import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
-import OpenAI from 'https://deno.land/x/openai@v4.19.1/mod.ts';
+import OpenAI from "openai/mod.ts";
 import { TriggerEventTypes, TriggerTypes } from "deno-slack-api/mod.ts";
 import ThreadWorkflow from "../workflows/thread_workflow.ts";
 
@@ -32,8 +32,7 @@ export default SlackFunction(
     const ackResponse = await client.chat.postMessage({
       channel: inputs.channel_id,
       thread_ts: inputs.message_ts,
-      text:
-        "考え中です。少々お待ちください！ :hourglass_flowing_sand:",
+      text: "考え中です。少々お待ちください！ :hourglass_flowing_sand:",
     });
 
     if (!ackResponse.ok) {
@@ -58,8 +57,7 @@ export default SlackFunction(
 
     const openai = new OpenAI({
       apiKey: env.OPENAI_API_KEY,
-    }
-    );
+    });
 
     const chatCompletion = await openai.chat.completions.create({
       messages: [
